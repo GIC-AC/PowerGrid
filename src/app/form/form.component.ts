@@ -237,4 +237,26 @@ export class FormComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
+  copyContent(data: any) {
+    let str = '';
+    str = `${JSON.stringify(data)}`;
+    if (str) {
+      const selBox = document.createElement('textarea');
+      selBox.style.position = 'fixed';
+      selBox.style.left = '0';
+      selBox.style.top = '0';
+      selBox.style.opacity = '0';
+      selBox.value = str;
+      document.body.appendChild(selBox);
+      selBox.focus();
+      selBox.select();
+      document.execCommand('copy');
+      document.body.removeChild(selBox);
+
+      this.successTitle = 'Alert';
+      this.successMsg = 'Text Copied';
+      this.openAlertDialog = true;
+    }
+  }
+
 }

@@ -101,10 +101,13 @@
                           {{dataItem.DocumentData | json}}
                         </ng-template>
                       </kendo-grid-column> -->
-                      <kendo-grid-column title="Action" [headerStyle]="headerStyle" [sortable]="false" [width]="80">
+                      <kendo-grid-column title="Action" [headerStyle]="headerStyle" [sortable]="false" [width]="100">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           <button kendoButton icon="eye" [primary]="true" title="View Details" 
                             (click)="showResponseDialog(dataItem)">
+                          </button>&nbsp;
+                          <button kendoButton icon="copy" [primary]="true" title="Copy Content" 
+                           (click)="copyContent(dataItem)">
                           </button>
                         </ng-template>
                       </kendo-grid-column>
