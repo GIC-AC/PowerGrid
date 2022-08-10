@@ -1,0 +1,6 @@
+{
+    "apiUrl": "https://peregrineb.fadv.net:10443/",
+    "userMgtApiUrl": "https://cspingb.fadv.net:10443/user-management/india/",
+    "onlineEngineSingleSearchUrl":"http://10.250.6.106:8299/api/india/",
+    "onlineEngineUrl":"http://10.250.6.106:8000/api/india/"
+}

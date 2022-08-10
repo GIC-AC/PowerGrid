@@ -1,0 +1,32 @@
+.logo-img {
+    height: 60px;
+    margin: 5px;
+   /*  margin-left: -35px; */
+    }
+    .k-appbar{
+        background-color: white;
+      background-size: 100% 100%;
+      padding: 0 10px;
+      }
+ 
+      
+      ul {
+      font-size: 14px;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      }
+      li {
+      margin: 0px 5px;
+      color: #fff;
+      
+      }
+      li svg{
+      color: #fff;
+      }
+      li:hover {
+      
+      color: #fff;
+      }
+

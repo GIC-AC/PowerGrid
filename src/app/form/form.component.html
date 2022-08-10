@@ -1,0 +1,248 @@
+<kendo-card style="width: 100%; height: 100vh;">
+  <kendo-card-header style="padding: 0px;">
+    <kendo-appbar [position]="'top'" style="padding: 0px;">
+      <kendo-appbar-spacer [width]="'8px'"></kendo-appbar-spacer>
+      <kendo-appbar-section>
+        <img src="./assets/Images/logoleft.jpg" class="logo-img">
+      </kendo-appbar-section>
+
+      <kendo-appbar-spacer></kendo-appbar-spacer>
+      <kendo-appbar-section></kendo-appbar-section>
+      <kendo-appbar-spacer></kendo-appbar-spacer>
+      <kendo-appbar-section><img src="./assets/Images/logoright.jpg" class="logo-img"></kendo-appbar-section>
+      <!-- <kendo-appbar-section>
+        <div class="bm-user">
+          <div class="icon"><span class="k-icon k-i-user"></span></div>
+          <div class="username"><strong style="text-transform: uppercase;">{{ currentUserName }}</strong></div>
+          <div class="logout"><a (click)="onlogout()" style="cursor: pointer;"><span class="k-icon k-i-logout"></span>
+              Logout</a></div>
+        </div>
+      </kendo-appbar-section> -->
+
+    </kendo-appbar>
+  </kendo-card-header>
+
+  <kendo-card-body style="height:calc(100vh - 85vh)">
+    <div class="loading" *ngIf="loading">
+      <img src="assets/Images/loader_fadv.svg" class="loading-image" />
+    </div>
+
+    <div class="section">
+      <kendo-tabstrip (tabSelect)="onTabSelect($event)" #tabstrip>
+        
+        <kendo-tabstrip-tab [title]="'Online Engine Search'" [selected]="true">
+          <ng-template kendoTabContent>
+            <app-single-form></app-single-form>
+          </ng-template>
+        </kendo-tabstrip-tab>
+        <kendo-tabstrip-tab [title]="'Online Engine Bulk Search'">
+          <ng-template kendoTabContent>
+
+            <kendo-card [width]="'100%'" style="min-height: 100%;">
+              <kendo-card-header class="page-header">
+                <h3>Online Engine</h3>
+              </kendo-card-header>
+              <kendo-card-body class="grid-container">
+                <div class="top">
+                  <form class="k-form" [formGroup]="uploadForm" (ngSubmit)="submitForm()">
+                    <div class="form-search">
+                      <div class="cols">
+                        <kendo-fileselect formControlName="file" [multiple]="false"
+                          (select)="selectEventHandler($event)" (remove)="removeEventHandler($event)"
+                          [restrictions]="fileRestrictions">
+                        </kendo-fileselect>
+                      </div>
+                    </div>
+                    <div class="row control-box">
+                      <div class="cols" style="text-align: right">
+                        <div class="cols">
+                          <kendo-buttongroup>
+                            <button *ngIf="!uploadExcelFile" kendoButton [primary]="true" icon="download" type="button"
+                              (click)="getSampleExcel()">
+                              Download Template
+                            </button>
+                            <button *ngIf="uploadExcelFile" kendoButton [primary]="true" icon="upload"
+                              [disabled]="!uploadForm.valid">
+                              Submit
+                            </button>
+                            <button kendoButton look="outline" [primary]="true" type="button" icon="reset"
+                              (click)="resetForm()">Reset</button>
+                          </kendo-buttongroup>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="grid-container">
+                  <div class="top">
+                    <form class="k-form" [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
+                      <div class="form-search">
+                        <div class="cols" style="margin-right: 5px;">
+                          <kendo-datepicker formControlName="fromDate" [format]="'yyyy-MM-dd'" [min]="minDate"
+                            [max]="maxDate">
+                          </kendo-datepicker>
+                        </div>
+                        <div class="cols" style="margin-right: 5px;">
+                          <kendo-datepicker formControlName="toDate" [format]="'yyyy-MM-dd'" [min]="minDate"
+                            [max]="maxDate">
+                          </kendo-datepicker>
+                        </div>
+
+                        <div class="cols">
+                          <kendo-textbox placeholder="Reference Id" [clearButton]="true" class="contols-search"
+                            formControlName="referenceId"></kendo-textbox>
+                        </div>
+
+                        <div class="cols buttons">
+                          <kendo-buttongroup>
+                            <button kendoButton [primary]="true" icon="zoom" type="submit"
+                              [disabled]="!filterForm.valid"></button>
+                            <button kendoButton look="outline" [primary]="true" type="button" icon="reset"
+                              (click)="resetFilterForm()"></button>
+                          </kendo-buttongroup>
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                  <div>
+                    <kendo-grid [data]="gridView" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
+                      (pageChange)="pageChange($event)" [resizable]="true" style="min-height: 100%;" [sortable]="true"
+                      [sort]="sort" (sortChange)="sortChange($event)">
+                      <kendo-grid-column field="referenceId" title="Reference Id" [headerStyle]="headerStyle">
+                      </kendo-grid-column>
+                      <kendo-grid-column field="requestId" title="Request Id" [headerStyle]="headerStyle">
+                      </kendo-grid-column>
+
+                      <kendo-grid-column field="uploadedDateTime" title="Uploaded Time" [headerStyle]="headerStyle">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          {{dataItem.uploadedDateTime | date : 'short'}}
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column field="requestTime" title="Request Time" [headerStyle]="headerStyle">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          {{dataItem.requestTime | date : 'short'}}
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column title="Request Json" [headerStyle]="headerStyle" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <button kendoButton icon="eye" [primary]="true" title="View Request Json"
+                            (click)="openInnerDialog(dataItem.requestJson,'Request Json')"></button>
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column field="responseTime" title="Response Time" [headerStyle]="headerStyle">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          {{dataItem.responseTime | date : 'short'}}
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column title="Response Json" [headerStyle]="headerStyle" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          <button kendoButton icon="eye" [primary]="true" *ngIf="dataItem.sentToOnlineEngine"
+                            title="View Response Json" (click)="showResponseDialog(dataItem.responseJson)"
+                            [disabled]="!(dataItem.onlineEngineStatus)">
+                          </button>
+                        </ng-template>
+                      </kendo-grid-column>
+
+                    </kendo-grid>
+                  </div>
+                </div>
+              </kendo-card-body>
+            </kendo-card>
+          </ng-template>
+        </kendo-tabstrip-tab>
+      </kendo-tabstrip>
+    </div>
+
+
+
+    <kendo-dialog title="Success" *ngIf="this.successRefId" (close)="close()" [minWidth]="250" [width]="450">
+      <p style="margin: 30px; text-align: center;">
+        File uploaded successfully, referenceId: <strong>{{successRefId}}</strong>
+      </p>
+    </kendo-dialog>
+
+    <kendo-dialog title="Response Json" *ngIf="resDialog" (close)="close()" [minWidth]="250" [width]="900">
+      <div class="panelbar-wrapper" style="overflow-y: auto; height:calc(83vh - 196px)">
+        <div *ngFor="let item of seletedResult | keyvalue">
+          <kendo-panelbar>
+            <kendo-panelbar-item title=" {{item.key}}">
+              <ng-template kendoPanelBarContent>
+                <table id="customers">
+                  <tr *ngFor="let data of getValueLoop(item.value)| keyvalue">
+                    <th style=" width: 400px; text-transform: capitalize;">
+                      {{ data.key === "Time Taken"? "Time Taken (Seconds)":data.key}}
+                    </th>
+                    <td>
+                      <span>
+                        {{checkValueObj(data.value,data.key) == '[object
+                        Object]'?'':checkValueObj(data.value,data.key)}}
+                      </span>
+                      <button kendoButton *ngIf="checkValueObj(data.value,data.key) == '[object Object]'"
+                        [primary]="true" type="button" (click)="openInnerDialog(data.value,data.key)">View</button>
+                    </td>
+                  </tr>
+                </table>
+              </ng-template>
+            </kendo-panelbar-item>
+          </kendo-panelbar>
+        </div>
+      </div>
+    </kendo-dialog>
+
+    <kendo-dialog title="{{title}}" *ngIf="openInner" (close)="closeInnerDialog()" [minWidth]="250" [width]="450">
+      <table id="customers">
+        <tr *ngFor="let dataInput of inputDataObj | keyvalue">
+          <th style="text-transform: capitalize;">
+            {{dataInput.key}}
+          </th>
+          <td>
+            {{dataInput.value}}
+          </td>
+
+        </tr>
+      </table>
+    </kendo-dialog>
+
+
+    <kendo-dialog [title]="'Alert'" *ngIf="errorMessage.length" (close)="close()" [minWidth]="250" [width]="650"
+      [maxHeight]="'80%'">
+      <kendo-card *ngFor="let item of errorMessage" style="width: 100%; margin-bottom: 5px;">
+        <kendo-card-header style="background: #f3891f;">
+          <h3>{{item['header']}}</h3>
+        </kendo-card-header>
+        <kendo-card-body>
+          <div *ngFor="let error of item.errors; let i= index">
+            <ul *ngFor="let er of error | keyvalue; let j= index">
+              <li style="color: #000;"><strong>{{er.key}}:&nbsp;</strong>{{er.value}}</li>
+            </ul>
+          </div>
+        </kendo-card-body>
+      </kendo-card>
+    </kendo-dialog>
+
+
+
+
+
+    <!-- <kendo-dialog title="File upload failed" *ngIf="openFailed" (close)="close()" [minWidth]="250" [width]="450">
+      <p style="margin: 30px; text-align: center;" *ngIf="!isFieldError"> <strong>{{failedUploadMsg | json}}</strong>
+      </p>
+      <div style="margin: 30px; text-align: center;" *ngIf="isFieldError">
+        <ul *ngFor="let item of errorFields">
+          <li><strong>{{item}} : </strong>{{failedUploadMsg[item]}}</li>
+        </ul>
+      </div>
+    </kendo-dialog> -->
+
+    <kendo-dialog title="{{successTitle}}" *ngIf="openAlertDialog" (close)="closeAlertDialog('cancel')" [minWidth]="250"
+      [width]="450">
+      <p style="text-align: center;" *ngIf="successMsg">{{successMsg}}</p>
+    </kendo-dialog>
+
+  </kendo-card-body>
+
+  <kendo-card-footer>
+    <div class="k-text-center" style="font-size: 12px;">Copyright &copy; {{year}} First Advantage. All rights reserved.
+    </div>
+  </kendo-card-footer>
+</kendo-card>
