@@ -19,8 +19,8 @@ export class LoginService {
   loggedInUserDetails = new BehaviorSubject(null);
 
   constructor(private http: HttpClient, public config: AppConfig) {
-    this.apiUrl = config.apiUrl;
-    this.userMgtApiUrl = config.userMgtApiUrl;
+    //this.apiUrl = config.apiUrl;
+    //this.userMgtApiUrl = config.userMgtApiUrl;
     console.log(this.apiUrl);
   }
 

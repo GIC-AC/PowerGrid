@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
-import { OnlineEngineService } from 'src/app/Service/online-engine.service';
+import { InvoiceService } from 'src/app/Service/online-engine.service';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class SingleFormComponent implements OnInit {
   message: any;
   loading:boolean=false
 
-  constructor(private _onlineEngineService: OnlineEngineService) { }
+  constructor(private _invoiceService: InvoiceService) { }
   allData: any = []
   public opened = false;
   openedDialog: boolean = false;
@@ -23,15 +23,13 @@ export class SingleFormComponent implements OnInit {
   title: any;
   stateName: any = []
 
-  searchForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    din: new FormControl(),
-    dob: new FormControl('', Validators.required),
-    contexts: new FormControl(),
-    address: new FormControl(),
-    father_name: new FormControl(),
-    state: new FormControl(),
-    startdate: new FormControl(null)
+  invoiceForm: FormGroup = new FormGroup({
+    VendorName: new FormControl('', Validators.required),
+    BillingName: new FormControl('', Validators.required),
+    Date: new FormControl(null, Validators.required),
+    InvoiceNumber: new FormControl('', Validators.required),
+    TotalAmount: new FormControl('', Validators.required),
+    base64Code: new FormControl('', Validators.required),
   })
 
   ngOnInit(): void {
@@ -52,20 +50,6 @@ export class SingleFormComponent implements OnInit {
     }
   }
 
-  age18Check(birthday: any) {
-    console.log(birthday)
-    let data = moment(birthday).add(18, 'years') <= moment();
-    if (data === false) {
-      this.openedDialog = true;
-      this.searchForm.patchValue({
-        dob: ''
-      })
-      this.message = "Age Should Be 18+"
-    }
-  }
-
-
-
   public close(status: string): void {
     this.opened = false;
     this.openedDialog = false
@@ -77,35 +61,25 @@ export class SingleFormComponent implements OnInit {
     this.opened = true;
   }
 
-  onSearch() {
-    this.loading=true;
-    let check = formatDate(this.searchForm.value.startdate, 'dd.MM.yyyy', 'en')
-    if(check === "01.01.1970"){
-      this.searchForm.value.startdate= ""
-    }
-    else{
-      this.searchForm.value.startdate= formatDate(this.searchForm.value.startdate, 'dd.MM.yyyy', 'en')
-    }
+  onSubmit() {
     let obj = {
-      name: this.searchForm.value.name,
-      din: this.searchForm.value.din,
-      dob: formatDate(this.searchForm.value.dob, 'dd-MM-yyyy', 'en'),
-      contexts: this.searchForm.value.contexts,
-      address: this.searchForm.value.address,
-      father_name: this.searchForm.value.father_name,
-      state: this.searchForm.value.state,
-      startdate:this.searchForm.value.startdate
+      "ApplicationData": {
+        VendorName: this.invoiceForm.value.VendorName,
+        BillingName: this.invoiceForm.value.BillingName,
+        Date: formatDate(this.invoiceForm.value.Date, 'dd-MM-yyyy', 'en'),
+        InvoiceNumber: this.invoiceForm.value.InvoiceNumber,
+        TotalAmount: this.invoiceForm.value.TotalAmount
+      },
+      "base64Code": this.invoiceForm.value.base64Code
     }
-    this._onlineEngineService.getDataByFormSearch(obj).subscribe({
+    this._invoiceService.uploadInvoice(obj).subscribe({
       next: (res) => {
         console.log(res);
-        this.allData = res.response
-        if (res.response === 0) {
+        if (res.response) {
           this.openedDialog = true;
-          this.message = "No Data Found"
+          this.message = res.successMsg
         }
-        console.log(this.allData)
-        this.searchForm.reset();
+        this.invoiceForm.reset();
       },
       error: (err) =>  {
         console.log(err?.error);

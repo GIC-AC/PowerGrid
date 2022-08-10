@@ -1,122 +1,58 @@
 <div class="loading" *ngIf="loading">
-  <img src="assets/Images/loader_fadv.svg"class="loading-image"/>
+  <img src="assets/Images/loader_fadv.svg" class="loading-image" />
 </div>
 <kendo-card width="100%" style="height:100% ;">
   <kendo-card-header style="padding: 8px;">
     <h3>Online Engine</h3>
   </kendo-card-header>
   <kendo-card-body>
-    <form [formGroup]="searchForm" class="k-form">
+    <form [formGroup]="invoiceForm" class="k-form">
       <div class="searchbox">
         <div class="rows">
           <div class="cols">
-            <kendo-textbox placeholder="Name *" formControlName="name">
-            </kendo-textbox>
-          </div>
-
-          <div class="cols">
-            <kendo-textbox placeholder="DIN" formControlName="din">
+            <kendo-textbox placeholder="Vendor Name *" formControlName="VendorName">
             </kendo-textbox>
           </div>
           <div class="cols">
-            <kendo-datepicker placeholder="DOB *" (valueChange)="age18Check($event)" formControlName="dob"></kendo-datepicker>
-          </div>
-          <div class="cols">
-            <kendo-textbox placeholder="Contexts" formControlName="contexts">
+            <kendo-textbox placeholder="Billing Name *" formControlName="BillingName">
             </kendo-textbox>
           </div>
+          <div class="cols">
+            <kendo-datepicker placeholder="Date *" formControlName="Date"></kendo-datepicker>
           </div>
-
-          <div class="rows">
-            <div class="cols">
-              <kendo-textbox placeholder="Address" formControlName="address">
-              </kendo-textbox>
-            </div>
-            <div class="cols">
-              <kendo-textbox placeholder="Father Name" formControlName="father_name">
-              </kendo-textbox>
-            </div>
-  
-            <div class="cols">
-
-              <kendo-textbox placeholder="State Name" formControlName="state">
-              </kendo-textbox>
-              <!-- <kendo-combobox [data]="stateName"   placeholder="State" formControlName="state">
-              </kendo-combobox> -->
-            </div>
-            <div class="cols">
-              <kendo-datepicker placeholder="Start Date" formControlName="startdate"></kendo-datepicker>
-            </div>
+          <div class="cols">
+            <kendo-textbox placeholder="Invoice Number *" formControlName="InvoiceNumber">
+            </kendo-textbox>
           </div>
-  
+        </div>
+        <div class="rows">
+          <div class="cols">
+            <kendo-numerictextbox
+              [spinners]="false"
+              placeholder="Total Amount *"
+              formControlName="TotalAmount"
+            ></kendo-numerictextbox>
+          </div>
+          <div class="cols">
+            <kendo-textarea placeholder="Please type base64 code here" formControlName="base64Code">
+            </kendo-textarea>
+          </div>
+        </div>
+
         <div class="rows">
           <div class="cols searchbtn">
-            <button kendoButton [primary]="true" [disabled]="!searchForm.valid" (click)="onSearch()" icon="search">
-              Search
+            <button kendoButton [primary]="true" [disabled]="!invoiceForm.valid" (click)="onSubmit()" icon="save">
+              Submit
             </button>
           </div>
         </div>
       </div>
     </form>
-    <div class="panelbar-wrapper" style="overflow-y: auto; height:calc(83vh - 196px)">
-      <div *ngFor="let item of allData | keyvalue">
-        <kendo-panelbar>   
-        <kendo-panelbar-item  title=" {{item.key}}" >
-          <ng-template kendoPanelBarContent>
-        <table id="customers">   
-          <tr *ngFor="let data of getValueLoop(item.value)| keyvalue">
-            <th style=" width: 400px;">
-              {{data.key}}
-            </th>
-            <td >
-              <span >
-                {{checkValueObj(data.value) ==  '[object Object]'?'':checkValueObj(data.value)}}
-              </span>         
-              <button kendoButton *ngIf="checkValueObj(data.value) == '[object Object]'" [primary]="true" type="button" (click)="openDialog(data.value,data.key)">View</button>
-            </td>
-  
-          </tr>
-        </table>  
-          </ng-template>
-        </kendo-panelbar-item>
-      </kendo-panelbar>
-      </div>
-  </div>
   </kendo-card-body>
 </kendo-card>
 
 
-     <kendo-dialog
-      title="{{title}}"
-      *ngIf="opened"
-      (close)="close('cancel')"
-      [minWidth]="250"
-      [width]="450"
-    >
-    <table id="customers">   
-      <tr *ngFor="let dataInput of inputDataObj| keyvalue">
-        <th>
-          {{dataInput.key}}
-        </th>
-        <td >
-            {{dataInput.value }}
-      
-        </td>
-
-      </tr>
-    </table>  
-     
-    </kendo-dialog>
-
-
-    <kendo-dialog
-    title="Message"
-    *ngIf="openedDialog"
-    (close)="close('cancel')"
-    [minWidth]="250"
-    [width]="450"
-  >
+<kendo-dialog title="Message" *ngIf="openedDialog" (close)="close('cancel')" [minWidth]="250" [width]="450">
   <p style="text-align: center">{{message}}</p>
-   
-  </kendo-dialog>
 
+</kendo-dialog>

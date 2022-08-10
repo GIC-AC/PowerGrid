@@ -3,10 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class AppConfig {
-  apiUrl: string = '';
-  userMgtApiUrl: string = '';
-  onlineEngineUrl: string = '';
-  onlineEngineSingleSearchUrl: string = '';
+  invoiceUrl: string = '';
   constructor(private httpClient: HttpClient) {}
 
   ensureInit(): Promise<any> {

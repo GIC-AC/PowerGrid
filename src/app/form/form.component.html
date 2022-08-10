@@ -30,49 +30,19 @@
     <div class="section">
       <kendo-tabstrip (tabSelect)="onTabSelect($event)" #tabstrip>
         
-        <kendo-tabstrip-tab [title]="'Online Engine Search'" [selected]="true">
+        <kendo-tabstrip-tab [title]="'Information Feed'" [selected]="true">
           <ng-template kendoTabContent>
             <app-single-form></app-single-form>
           </ng-template>
         </kendo-tabstrip-tab>
-        <kendo-tabstrip-tab [title]="'Online Engine Bulk Search'">
+        <kendo-tabstrip-tab [title]="'Information Search'">
           <ng-template kendoTabContent>
 
             <kendo-card [width]="'100%'" style="min-height: 100%;">
               <kendo-card-header class="page-header">
                 <h3>Online Engine</h3>
               </kendo-card-header>
-              <kendo-card-body class="grid-container">
-                <div class="top">
-                  <form class="k-form" [formGroup]="uploadForm" (ngSubmit)="submitForm()">
-                    <div class="form-search">
-                      <div class="cols">
-                        <kendo-fileselect formControlName="file" [multiple]="false"
-                          (select)="selectEventHandler($event)" (remove)="removeEventHandler($event)"
-                          [restrictions]="fileRestrictions">
-                        </kendo-fileselect>
-                      </div>
-                    </div>
-                    <div class="row control-box">
-                      <div class="cols" style="text-align: right">
-                        <div class="cols">
-                          <kendo-buttongroup>
-                            <button *ngIf="!uploadExcelFile" kendoButton [primary]="true" icon="download" type="button"
-                              (click)="getSampleExcel()">
-                              Download Template
-                            </button>
-                            <button *ngIf="uploadExcelFile" kendoButton [primary]="true" icon="upload"
-                              [disabled]="!uploadForm.valid">
-                              Submit
-                            </button>
-                            <button kendoButton look="outline" [primary]="true" type="button" icon="reset"
-                              (click)="resetForm()">Reset</button>
-                          </kendo-buttongroup>
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+              <kendo-card-body class="grid-container">               
                 <div class="grid-container">
                   <div class="top">
                     <form class="k-form" [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
@@ -110,10 +80,8 @@
                       [sort]="sort" (sortChange)="sortChange($event)">
                       <kendo-grid-column field="referenceId" title="Reference Id" [headerStyle]="headerStyle">
                       </kendo-grid-column>
-                      <kendo-grid-column field="requestId" title="Request Id" [headerStyle]="headerStyle">
-                      </kendo-grid-column>
-
-                      <kendo-grid-column field="uploadedDateTime" title="Uploaded Time" [headerStyle]="headerStyle">
+                      
+                      <!-- <kendo-grid-column field="uploadedDateTime" title="Uploaded Time" [headerStyle]="headerStyle">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{dataItem.uploadedDateTime | date : 'short'}}
                         </ng-template>
@@ -122,23 +90,21 @@
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{dataItem.requestTime | date : 'short'}}
                         </ng-template>
-                      </kendo-grid-column>
-                      <kendo-grid-column title="Request Json" [headerStyle]="headerStyle" [sortable]="false">
+                      </kendo-grid-column> -->
+                      <kendo-grid-column title="Application Data" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          <button kendoButton icon="eye" [primary]="true" title="View Request Json"
-                            (click)="openInnerDialog(dataItem.requestJson,'Request Json')"></button>
+                          {{dataItem.ApplicationData | json}}
                         </ng-template>
                       </kendo-grid-column>
-                      <kendo-grid-column field="responseTime" title="Response Time" [headerStyle]="headerStyle">
+                      <kendo-grid-column title="Document Data" field="DocumentData" [headerStyle]="headerStyle">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.responseTime | date : 'short'}}
+                          {{dataItem.DocumentData | json}}
                         </ng-template>
                       </kendo-grid-column>
-                      <kendo-grid-column title="Response Json" [headerStyle]="headerStyle" [sortable]="false">
+                      <kendo-grid-column title="Action" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          <button kendoButton icon="eye" [primary]="true" *ngIf="dataItem.sentToOnlineEngine"
-                            title="View Response Json" (click)="showResponseDialog(dataItem.responseJson)"
-                            [disabled]="!(dataItem.onlineEngineStatus)">
+                          <button kendoButton icon="eye" [primary]="true" title="View Details" 
+                            (click)="showResponseDialog(dataItem)">
                           </button>
                         </ng-template>
                       </kendo-grid-column>
@@ -161,8 +127,8 @@
       </p>
     </kendo-dialog>
 
-    <kendo-dialog title="Response Json" *ngIf="resDialog" (close)="close()" [minWidth]="250" [width]="900">
-      <div class="panelbar-wrapper" style="overflow-y: auto; height:calc(83vh - 196px)">
+    <kendo-dialog title=" " *ngIf="resDialog" (close)="close()" [minWidth]="250" [width]="900">
+      <!-- <div class="panelbar-wrapper" style="overflow-y: auto; height:calc(83vh - 196px)">
         <div *ngFor="let item of seletedResult | keyvalue">
           <kendo-panelbar>
             <kendo-panelbar-item title=" {{item.key}}">
@@ -174,8 +140,7 @@
                     </th>
                     <td>
                       <span>
-                        {{checkValueObj(data.value,data.key) == '[object
-                        Object]'?'':checkValueObj(data.value,data.key)}}
+                        {{checkValueObj(data.value,data.key) == '[object Object]'?'':checkValueObj(data.value,data.key)}}
                       </span>
                       <button kendoButton *ngIf="checkValueObj(data.value,data.key) == '[object Object]'"
                         [primary]="true" type="button" (click)="openInnerDialog(data.value,data.key)">View</button>
@@ -186,6 +151,103 @@
             </kendo-panelbar-item>
           </kendo-panelbar>
         </div>
+      </div> -->
+      <div>
+        <table style="width: -webkit-fill-available; border: 1;">
+          <thead>
+            <tr>
+              <th style="text-transform: capitalize;">
+                Title
+              </th>
+              <th style="text-transform: capitalize;">
+                Application Data
+              </th>
+              <th style="text-transform: capitalize;">
+                Document Data
+              </th>
+              <th style="text-transform: capitalize;">
+                Matched Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                Date
+              </td>
+              <td>
+                {{seletedResult['ApplicationData']['Date']}}
+              </td>
+              <td>
+                {{seletedResult['DocumentData']['Date']}}
+              </td>
+              <td [width]="100">
+                <span *ngIf="seletedResult['Document Matched Data']['Date']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['Document Matched Data']['Date']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+              </td>   
+            </tr>
+            <tr>
+              <td>
+                Vendor Name
+              </td>
+              <td>
+                {{seletedResult['ApplicationData']['VendorName']}}
+              </td>
+              <td>
+                {{seletedResult['DocumentData']['VendorName']}}
+              </td>
+              <td [width]="100">
+                <span *ngIf="seletedResult['Document Matched Data']['VendorName']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['Document Matched Data']['VendorName']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+              </td>  
+            </tr>
+            <tr>
+              <td>
+                Billing Name
+              </td>
+              <td>
+                {{seletedResult['ApplicationData']['BillingName']}}
+              </td>
+              <td>
+                {{seletedResult['DocumentData']['BillingName']}}
+              </td>
+              <td [width]="100">
+                <span *ngIf="seletedResult['Document Matched Data']['BillingName']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['Document Matched Data']['BillingName']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+              </td>  
+            </tr>
+            <tr>
+              <td>
+                Total Amount
+              </td>
+              <td>
+                {{seletedResult['ApplicationData']['TotalAmount']}}
+              </td>
+              <td>
+                {{seletedResult['DocumentData']['TotalAmount']}}
+              </td>
+              <td [width]="100">
+                <span *ngIf="seletedResult['Document Matched Data']['TotalAmount']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['Document Matched Data']['TotalAmount']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+              </td> 
+            </tr>
+            <tr>
+              <td>
+                Invoice Number
+              </td>
+              <td>
+                {{seletedResult['ApplicationData']['InvoiceNumber']}}
+              </td>
+              <td>
+                {{seletedResult['DocumentData']['InvoiceNumber']}}
+              </td>
+              <td [width]="100">
+                <span *ngIf="seletedResult['Document Matched Data']['InvoiceNumber']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['Document Matched Data']['InvoiceNumber']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+              </td>   
+            </tr>
+          </tbody>
+        </table>
       </div>
     </kendo-dialog>
 
