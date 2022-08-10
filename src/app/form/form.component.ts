@@ -40,6 +40,7 @@ export class FormComponent implements OnInit {
 
   sort: SortDescriptor[] = [];
   resDialog = false;
+  seletedTitle: any;
   seletedResult: any = null;
   errorMessage: any[] = [];
   failedUploadMsg: any = null;
@@ -62,6 +63,7 @@ export class FormComponent implements OnInit {
   successTitle: string = '';
   errorList = [];
   errorMap:any = null;
+  objectKeys = Object.keys;
 
   constructor(private router: Router, private _invoiceService: InvoiceService, private loginobj: LoginService) { }
 
@@ -195,6 +197,7 @@ export class FormComponent implements OnInit {
   showResponseDialog(data:any) {
     if(data){
       this.seletedResult = data; //JSON.parse(data);
+      this.seletedTitle = `Reference Id: ${this.seletedResult?.referenceId}`
       this.resDialog = true;
     }  
   }

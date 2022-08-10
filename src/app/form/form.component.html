@@ -40,7 +40,7 @@
 
             <kendo-card [width]="'100%'" style="min-height: 100%;">
               <kendo-card-header class="page-header">
-                <h3>Online Engine</h3>
+                <h3>Search</h3>
               </kendo-card-header>
               <kendo-card-body class="grid-container">               
                 <div class="grid-container">
@@ -91,17 +91,17 @@
                           {{dataItem.requestTime | date : 'short'}}
                         </ng-template>
                       </kendo-grid-column> -->
-                      <kendo-grid-column title="Application Data" [headerStyle]="headerStyle" [sortable]="false">
+                      <kendo-grid-column title="Invoice Number" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.ApplicationData | json}}
+                          {{dataItem.ApplicationData['InvoiceNumber']}}
                         </ng-template>
                       </kendo-grid-column>
-                      <kendo-grid-column title="Document Data" field="DocumentData" [headerStyle]="headerStyle">
+                      <!-- <kendo-grid-column title="Document Data" field="DocumentData" [headerStyle]="headerStyle">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           {{dataItem.DocumentData | json}}
                         </ng-template>
-                      </kendo-grid-column>
-                      <kendo-grid-column title="Action" [headerStyle]="headerStyle" [sortable]="false">
+                      </kendo-grid-column> -->
+                      <kendo-grid-column title="Action" [headerStyle]="headerStyle" [sortable]="false" [width]="80">
                         <ng-template kendoGridCellTemplate let-dataItem>
                           <button kendoButton icon="eye" [primary]="true" title="View Details" 
                             (click)="showResponseDialog(dataItem)">
@@ -127,7 +127,7 @@
       </p>
     </kendo-dialog>
 
-    <kendo-dialog title=" " *ngIf="resDialog" (close)="close()" [minWidth]="250" [width]="900">
+    <kendo-dialog title="{{seletedTitle}}" *ngIf="resDialog" (close)="close()" [minWidth]="250" [width]="900">
       <!-- <div class="panelbar-wrapper" style="overflow-y: auto; height:calc(83vh - 196px)">
         <div *ngFor="let item of seletedResult | keyvalue">
           <kendo-panelbar>
@@ -303,8 +303,4 @@
 
   </kendo-card-body>
 
-  <kendo-card-footer>
-    <div class="k-text-center" style="font-size: 12px;">Copyright &copy; {{year}} First Advantage. All rights reserved.
-    </div>
-  </kendo-card-footer>
 </kendo-card>

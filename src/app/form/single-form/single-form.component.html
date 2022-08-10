@@ -3,7 +3,7 @@
 </div>
 <kendo-card width="100%" style="height:100% ;">
   <kendo-card-header style="padding: 8px;">
-    <h3>Online Engine</h3>
+    <h3>Create</h3>
   </kendo-card-header>
   <kendo-card-body>
     <form [formGroup]="invoiceForm" class="k-form">
@@ -24,8 +24,6 @@
             <kendo-textbox placeholder="Invoice Number *" formControlName="InvoiceNumber">
             </kendo-textbox>
           </div>
-        </div>
-        <div class="rows">
           <div class="cols">
             <kendo-numerictextbox
               [spinners]="false"
@@ -33,8 +31,10 @@
               formControlName="TotalAmount"
             ></kendo-numerictextbox>
           </div>
+        </div>
+        <div class="rows">          
           <div class="cols">
-            <kendo-textarea placeholder="Please type base64 code here" formControlName="base64Code">
+            <kendo-textarea [rows]="15" placeholder="Please type base64 code here" formControlName="base64Code">
             </kendo-textarea>
           </div>
         </div>
