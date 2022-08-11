@@ -77,7 +77,7 @@ export class SingleFormComponent implements OnInit {
         console.log(res);
         if (res.response) {
           this.openedDialog = true;
-          this.message = res.successMsg
+          this.message = res.successMsg + ', Reference Id: '+ res.response
         }
         this.invoiceForm.reset();
       },

@@ -18,39 +18,8 @@ export class InvoiceService {
     return this.http.post<any>(`${this.invoiceUrl}submit`,obj)
   }
 
-  getDataByReferenceId(referenceId: any) : Observable<any>{
-    return of({
-      success: true,
-      successMsg: 'Response Received successfully',
-      successCode: 'SUCCESS_CODE_200',
-      response: [
-        {
-          referenceId: 'AXP349F70UIK',
-          DocumentData: {
-            Date: '2022-03-05',
-            VendorName: 'Axel',
-            BillingName: 'Ajay Saho',
-            TotalAmount: '300.00',
-            InvoiceNumber: 'ABCD1234',
-          },
-          ApplicationData: {
-            Date: '2022-03-05',
-            VendorName: 'Axel',
-            BillingName: 'Ajay Saho',
-            TotalAmount: '300.00',
-            InvoiceNumber: 'ABCD1234',
-          },
-          'Document Matched Data': {
-            Date: true,
-            VendorName: true,
-            BillingName: false,
-            TotalAmount: true,
-            InvoiceNumber: true,
-          },
-        },
-      ],
-    });
-   return this.http.get<any>(`${this.invoiceUrl}get/${referenceId}`);
+  getDataByReferenceId(obj: any) : Observable<any>{
+       return this.http.post<any>(`${this.invoiceUrl}get/filter`,obj);
   }
 
 

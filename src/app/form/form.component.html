@@ -24,7 +24,7 @@
 
   <kendo-card-body style="height:calc(100vh - 85vh)">
     <div class="loading" *ngIf="loading">
-      <img src="assets/Images/loader_fadv.svg" class="loading-image" />
+      <img src="assets/Images/loading.svg" class="loading-image" />
     </div>
 
     <div class="section">
@@ -48,12 +48,12 @@
                     <form class="k-form" [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
                       <div class="form-search">
                         <div class="cols" style="margin-right: 5px;">
-                          <kendo-datepicker formControlName="fromDate" [format]="'yyyy-MM-dd'" [min]="minDate"
+                          <kendo-datepicker formControlName="fromDate" [format]="'dd-MM-yyyy'" [min]="minDate"
                             [max]="maxDate">
                           </kendo-datepicker>
                         </div>
                         <div class="cols" style="margin-right: 5px;">
-                          <kendo-datepicker formControlName="toDate" [format]="'yyyy-MM-dd'" [min]="minDate"
+                          <kendo-datepicker formControlName="toDate" [format]="'dd-MM-yyyy'" [min]="minDate"
                             [max]="maxDate">
                           </kendo-datepicker>
                         </div>

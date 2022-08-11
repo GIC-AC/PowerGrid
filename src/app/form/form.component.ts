@@ -134,8 +134,8 @@ export class FormComponent implements OnInit {
   onFilterSubmit() {
     this.loading = true;
     const finalObj = {
-      fromDate: formatDate(this.filterForm.value.fromDate, 'yyyy-MM-dd', 'en'),
-      toDate: formatDate(this.filterForm.value.toDate, 'yyyy-MM-dd', 'en'),
+      fromDate: formatDate(this.filterForm.value.fromDate, 'dd-MM-yyyy', 'en'),
+      toDate: formatDate(this.filterForm.value.toDate, 'dd-MM-yyyy', 'en'),
       referenceId: this.filterForm.value.referenceId
     };
     this._invoiceService.getDataByReferenceId(finalObj).subscribe({
