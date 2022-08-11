@@ -75,7 +75,7 @@
                     </form>
                   </div>
                   <div>
-{{gridView | json}}
+
                     <kendo-grid [data]="gridView" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
                       (pageChange)="pageChange($event)" [resizable]="true" style="min-height: 100%;" [sortable]="true"
                       [sort]="sort" (sortChange)="sortChange($event)">
@@ -90,22 +90,22 @@
                       </kendo-grid-column>
                       <kendo-grid-column title="Request Time" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.requestTimestamp | date: "mm-dd-yyyy"}}
+                          {{dataItem.requestTimestamp | date: "d/M/yyyy, h:mm a"}}
                         </ng-template>
                       </kendo-grid-column>
                       <kendo-grid-column title="Response Time" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.responseTimestamp | date: "mm-dd-yyyy"}}
+                          {{dataItem.responseTimestamp | date: "d/M/yyyy, h:mm a"}}
                         </ng-template>
                       </kendo-grid-column>
 
                       <kendo-grid-column title="Action" [headerStyle]="headerStyle" [sortable]="false" [width]="218">
                         <ng-template kendoGridCellTemplate let-dataItem>
                          <kendo-buttongroup>
-                           <button kendoButton icon="eye" [primary]="true" title="View Details"
+                           <button kendoButton icon="eye" [primary]="true" [disabled]="dataItem.status!='success'" title="View Details"
                             (click)="showResponseDialog(dataItem.responseJson)"> VIEW
                           </button>&nbsp;
-                          <button kendoButton icon="copy" [primary]="true" look="outline" title="Copy Content"
+                          <button kendoButton icon="copy" [primary]="true" [disabled]="dataItem.status!='success'" look="outline" title="Copy Content"
                            (click)="copyContent(dataItem.responseJson)"> COPY JSON
                           </button>
                          </kendo-buttongroup>
