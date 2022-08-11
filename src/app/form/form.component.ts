@@ -78,7 +78,7 @@ export class FormComponent implements OnInit {
     toDate: new FormControl(new Date()),
     referenceId: new FormControl(''),
   });
-  
+
  year= new Date().getFullYear();
 
   currentUserName: any = null;
@@ -104,7 +104,7 @@ export class FormComponent implements OnInit {
   getValueLoop(item: any) {
     return item
   }
-  
+
   DateConvertor(oldDateFormat: any) {
     let newDate = new Date(oldDateFormat)
     const date = newDate.toLocaleString(undefined, { timeZone: 'Asia/Kolkata' })
@@ -151,8 +151,8 @@ export class FormComponent implements OnInit {
             this.successMsg = res.successMsg;
             this.openAlertDialog = true;
             this.gridData = [];
-          }   
-          this.loadItems();      
+          }
+          this.loadItems();
       },
       error: (err: any) =>  {
         console.log(err?.error.response.Error);
@@ -197,9 +197,9 @@ export class FormComponent implements OnInit {
   showResponseDialog(data:any) {
     if(data){
       this.seletedResult = data; //JSON.parse(data);
-      this.seletedTitle = `Reference Id: ${this.seletedResult?.referenceId}`
+      this.seletedTitle = `Reference ID: ${this.seletedResult?.referenceId}`
       this.resDialog = true;
-    }  
+    }
   }
 
   close() {
