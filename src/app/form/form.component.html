@@ -75,6 +75,7 @@
                     </form>
                   </div>
                   <div>
+
                     <kendo-grid [data]="gridView" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
                       (pageChange)="pageChange($event)" [resizable]="true" style="min-height: 100%;" [sortable]="true"
                       [sort]="sort" (sortChange)="sortChange($event)">
@@ -84,7 +85,7 @@
 
                       <kendo-grid-column title="Invoice Number" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.ApplicationData['InvoiceNumber']}}
+                          {{dataItem.ApplicationData['Invoice Number']}}
                         </ng-template>
                       </kendo-grid-column>
 
@@ -151,8 +152,8 @@
                 {{seletedResult['DocumentData']['Date']}}
               </td>
               <td [width]="100">
-                <span *ngIf="seletedResult['Document Matched Data']['Date']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
-                <span *ngIf="!seletedResult['Document Matched Data']['Date']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+                <span *ngIf="seletedResult['DocumentMatchedData']['Date']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['DocumentMatchedData']['Date']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
               </td>
             </tr>
             <tr>
@@ -166,8 +167,8 @@
                 {{seletedResult['DocumentData']['VendorName']}}
               </td>
               <td [width]="100">
-                <span *ngIf="seletedResult['Document Matched Data']['VendorName']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
-                <span *ngIf="!seletedResult['Document Matched Data']['VendorName']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+                <span *ngIf="seletedResult['DocumentMatchedData']['VendorName']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['DocumentMatchedData']['VendorName']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
               </td>
             </tr>
             <tr>
@@ -181,8 +182,8 @@
                 {{seletedResult['DocumentData']['BillingName']}}
               </td>
               <td [width]="100">
-                <span *ngIf="seletedResult['Document Matched Data']['BillingName']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
-                <span *ngIf="!seletedResult['Document Matched Data']['BillingName']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+                <span *ngIf="seletedResult['DocumentMatchedData']['BillingName']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['DocumentMatchedData']['BillingName']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
               </td>
             </tr>
             <tr>
@@ -196,8 +197,8 @@
                 {{seletedResult['DocumentData']['TotalAmount']}}
               </td>
               <td [width]="100">
-                <span *ngIf="seletedResult['Document Matched Data']['TotalAmount']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
-                <span *ngIf="!seletedResult['Document Matched Data']['TotalAmount']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+                <span *ngIf="seletedResult['DocumentMatchedData']['TotalAmount']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['DocumentMatchedData']['TotalAmount']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
               </td>
             </tr>
             <tr>
@@ -211,8 +212,8 @@
                 {{seletedResult['DocumentData']['InvoiceNumber']}}
               </td>
               <td [width]="100">
-                <span *ngIf="seletedResult['Document Matched Data']['InvoiceNumber']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
-                <span *ngIf="!seletedResult['Document Matched Data']['InvoiceNumber']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
+                <span *ngIf="seletedResult['DocumentMatchedData']['InvoiceNumber']" class="k-icon k-i-check" style="color: green; font-size: x-medium;"></span>
+                <span *ngIf="!seletedResult['DocumentMatchedData']['InvoiceNumber']" class="k-icon k-i-close" style="color: red; font-size: x-medium;"></span>
               </td>
             </tr>
           </tbody>
