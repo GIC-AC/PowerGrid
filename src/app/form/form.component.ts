@@ -160,9 +160,10 @@ export class FormComponent implements OnInit {
         console.log(res);
         this.skip = 0;
         if (res?.success && res?.response) {
-          this.gridData = res.response.map((record: any) => {
-            return JSON.parse(record.responseJson);
-          });
+          this.gridData = res.response;
+          /* this.gridData = res.response.map((record: any) => {
+           return record.responseJson? JSON.parse(record.responseJson): null;
+          }).filter((elem:any)=>elem); */
         } else {
           this.successTitle = 'Alert';
           this.successMsg = res.successMsg;
@@ -220,7 +221,7 @@ export class FormComponent implements OnInit {
 
   showResponseDialog(data: any) {
     if (data) {
-      this.seletedResult = data; //JSON.parse(data);
+      this.seletedResult = JSON.parse(data); // data; //;
       this.seletedTitle = `Reference ID: ${this.seletedResult?.referenceId}`;
       this.resDialog = true;
     }
@@ -263,7 +264,7 @@ export class FormComponent implements OnInit {
 
   copyContent(data: any) {
     let str = '';
-    str = `${JSON.stringify(data)}`;
+    str = typeof data == 'string' ? `${data}` : `${JSON.stringify(data)}`;
     if (str) {
       const selBox = document.createElement('textarea');
       selBox.style.position = 'fixed';

@@ -75,7 +75,7 @@
                     </form>
                   </div>
                   <div>
-
+{{gridView | json}}
                     <kendo-grid [data]="gridView" [pageSize]="pageSize" [skip]="skip" [pageable]="true"
                       (pageChange)="pageChange($event)" [resizable]="true" style="min-height: 100%;" [sortable]="true"
                       [sort]="sort" (sortChange)="sortChange($event)">
@@ -83,9 +83,19 @@
                       </kendo-grid-column>
 
 
-                      <kendo-grid-column title="Invoice Number" [headerStyle]="headerStyle" [sortable]="false">
+                      <kendo-grid-column title="Status" [headerStyle]="headerStyle" [sortable]="false" >
+                        <ng-template kendoGridCellTemplate let-dataItem >
+                          <span style="text-transform:capitalize;">{{dataItem.status}}</span>
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column title="Request Time" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.ApplicationData['Invoice Number']}}
+                          {{dataItem.requestTimestamp | date: "mm-dd-yyyy"}}
+                        </ng-template>
+                      </kendo-grid-column>
+                      <kendo-grid-column title="Response Time" [headerStyle]="headerStyle" [sortable]="false">
+                        <ng-template kendoGridCellTemplate let-dataItem>
+                          {{dataItem.responseTimestamp | date: "mm-dd-yyyy"}}
                         </ng-template>
                       </kendo-grid-column>
 
@@ -93,10 +103,10 @@
                         <ng-template kendoGridCellTemplate let-dataItem>
                          <kendo-buttongroup>
                            <button kendoButton icon="eye" [primary]="true" title="View Details"
-                            (click)="showResponseDialog(dataItem)"> VIEW
+                            (click)="showResponseDialog(dataItem.responseJson)"> VIEW
                           </button>&nbsp;
                           <button kendoButton icon="copy" [primary]="true" look="outline" title="Copy Content"
-                           (click)="copyContent(dataItem)"> COPY JSON
+                           (click)="copyContent(dataItem.responseJson)"> COPY JSON
                           </button>
                          </kendo-buttongroup>
                         </ng-template>
