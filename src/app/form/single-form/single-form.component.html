@@ -18,23 +18,22 @@
             </kendo-textbox>
           </div>
           <div class="cols">
-            <kendo-datepicker placeholder="Date *" formControlName="Date"></kendo-datepicker>
+            <kendo-datepicker placeholder="Date *" formControlName="Date"  [format]="'yyyy-MM-dd'"></kendo-datepicker>
           </div>
           <div class="cols">
             <kendo-textbox placeholder="Invoice Number *" formControlName="InvoiceNumber">
             </kendo-textbox>
           </div>
           <div class="cols">
-            <kendo-numerictextbox
-              [spinners]="false"
+            <kendo-textbox
               placeholder="Total Amount *"
               formControlName="TotalAmount"
-            ></kendo-numerictextbox>
+            ></kendo-textbox>
           </div>
         </div>
         <div class="rows">
           <div class="cols">
-            <kendo-textarea [rows]="15" placeholder="Please type base64 code here" formControlName="base64Code">
+            <kendo-textarea [rows]="15" placeholder="Paste base64 code here" formControlName="base64Code">
             </kendo-textarea>
           </div>
         </div>

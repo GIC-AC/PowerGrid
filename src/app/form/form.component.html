@@ -48,12 +48,12 @@
                     <form class="k-form" [formGroup]="filterForm" (ngSubmit)="onFilterSubmit()">
                       <div class="form-search">
                         <div class="cols" style="margin-right: 5px;">
-                          <kendo-datepicker formControlName="fromDate" [format]="'dd-MM-yyyy'" [min]="minDate"
+                          <kendo-datepicker formControlName="fromDate" [format]="'yyyy-MM-dd'" [min]="minDate"
                             [max]="maxDate">
                           </kendo-datepicker>
                         </div>
                         <div class="cols" style="margin-right: 5px;">
-                          <kendo-datepicker formControlName="toDate" [format]="'dd-MM-yyyy'" [min]="minDate"
+                          <kendo-datepicker formControlName="toDate" [format]="'yyyy-MM-dd'" [min]="minDate"
                             [max]="maxDate">
                           </kendo-datepicker>
                         </div>
@@ -90,12 +90,12 @@
                       </kendo-grid-column>
                       <kendo-grid-column title="Request Time" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.requestTimestamp | date: "d/M/yyyy, h:mm a"}}
+                          {{dataItem.requestTimestamp | date: "yyyy/M/d, h:mm a"}}
                         </ng-template>
                       </kendo-grid-column>
                       <kendo-grid-column title="Response Time" [headerStyle]="headerStyle" [sortable]="false">
                         <ng-template kendoGridCellTemplate let-dataItem>
-                          {{dataItem.responseTimestamp | date: "d/M/yyyy, h:mm a"}}
+                          {{dataItem.responseTimestamp | date: "yyyy/M/d, h:mm a"}}
                         </ng-template>
                       </kendo-grid-column>
 
@@ -126,7 +126,7 @@
 
     <kendo-dialog title="Success" *ngIf="this.successRefId" (close)="close()" [minWidth]="250" [width]="450">
       <p style="margin: 30px; text-align: center;">
-        File uploaded successfully, referenceId: <strong>{{successRefId}}</strong>
+        File uploaded successfully, reference ID: <strong>{{successRefId}}</strong>
       </p>
     </kendo-dialog>
 

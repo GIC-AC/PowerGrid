@@ -66,7 +66,7 @@ export class SingleFormComponent implements OnInit {
       "ApplicationData": {
         VendorName: this.invoiceForm.value.VendorName,
         BillingName: this.invoiceForm.value.BillingName,
-        Date: formatDate(this.invoiceForm.value.Date, 'dd-MM-yyyy', 'en'),
+        Date: formatDate(this.invoiceForm.value.Date, 'yyyy-MM-dd', 'en'),
         InvoiceNumber: this.invoiceForm.value.InvoiceNumber,
         TotalAmount: this.invoiceForm.value.TotalAmount
       },
@@ -77,13 +77,13 @@ export class SingleFormComponent implements OnInit {
         console.log(res);
         if (res.response) {
           this.openedDialog = true;
-          this.message = res.successMsg + ', Reference Id: '+ res.response
+          this.message = res.successMsg + ', \nReference ID: '+ res.response
         }
         this.invoiceForm.reset();
       },
       error: (err) =>  {
         console.log(err?.error);
-       
+
       },
       complete: () => {
         console.info('complete');
